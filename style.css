@@ -833,19 +833,21 @@ body {
 }
 
 @media (max-width: 600px) {
-  /* video anchored to top — dark area below it holds the text */
+  /* video fills top 50% — cover so sides clip naturally */
   #hero-video {
-    object-fit: contain;
+    object-fit: cover;
     top: 0;
+    left: 0;
+    right: 0;
     bottom: auto;
+    height: 50vh;
     transform: none;
-    height: auto;
   }
 
-  /* text sits clearly in the dark zone below the video */
+  /* text anchored in the dark bottom half */
   #hero-content {
     top: auto;
-    bottom: 3.5rem;
+    bottom: 3rem;
     right: var(--pad-x);
     left: var(--pad-x);
     text-align: right;
