@@ -78,6 +78,8 @@ body {
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  will-change: contents;
+  transform: translateZ(0);
 }
 
 #video-overlay {

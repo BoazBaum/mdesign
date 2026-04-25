@@ -5,6 +5,7 @@ const container   = document.getElementById('scroll-container');
 
 let duration = 0;
 let unlocked = false;
+let smoothProgress = 0;
 
 video.addEventListener('loadedmetadata', () => { duration = video.duration; });
 
@@ -18,17 +19,19 @@ function unlock() {
 function loop() {
   const scrollable = container.offsetHeight - window.innerHeight;
   const scrolled   = Math.max(0, -container.getBoundingClientRect().top);
-  const progress   = Math.min(scrolled / scrollable, 1);
+  const rawProgress = Math.min(scrolled / scrollable, 1);
+
+  smoothProgress += (rawProgress - smoothProgress) * 0.22;
 
   if (duration && unlocked) {
-    const target = duration * progress;
+    const target = duration * smoothProgress;
     if (Math.abs(video.currentTime - target) > 0.013) {
       video.currentTime = target;
     }
   }
 
-  progressBar.style.width = (progress * 100) + '%';
-  scrollHint.style.opacity = progress > 0.02 ? '0' : '1';
+  progressBar.style.width = (smoothProgress * 100) + '%';
+  scrollHint.style.opacity = rawProgress > 0.02 ? '0' : '1';
 
   requestAnimationFrame(loop);
 }
